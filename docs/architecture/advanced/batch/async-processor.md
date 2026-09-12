@@ -152,8 +152,11 @@ Queue configurations define the input message queue source parameters (such as R
 | Implementation | Characteristics |
 |---------------|-----------------|
 | Redis Sorted Set | Persisted, priority-ordered by deadline. Supports per-queue gate configurations. |
-| Redis Pub/Sub | Ephemeral, fan-out delivery. |
+| Redis Pub/Sub | Ephemeral, fan-out delivery. **Deprecated** — scheduled for removal in a future release; use Redis Sorted Set or GCP Pub/Sub instead. |
 | GCP Pub/Sub | Cloud-native, scalable. Supports per-subscription gating. |
+
+> [!WARNING]
+> The **Redis Pub/Sub** transport is deprecated and will be removed in a future release. Its fan-out delivery has no persistence and no per-consumer load sharing (every replica receives every message), which makes it unsuitable for the horizontally scaled, at-least-once dispatch pattern the Async Processor targets. Use **Redis Sorted Set** for a self-hosted queue or **GCP Pub/Sub** for a managed one.
 
 ## Configuration
 
