@@ -42,7 +42,9 @@ log_success "📜 Base CRDs: ${LOG_ACTION_NAME}..."
 kubectl $MODE -f https://github.com/kubernetes-sigs/gateway-api/releases/download/${GATEWAY_API_VERSION}/standard-install.yaml || true
 
 
-GATEWAY_API_INFERENCE_EXTENSION_VERSION=${GATEWAY_API_INFERENCE_EXTENSION_VERSION:-"v1.5.0"}
+# Honour GAIE_VERSION (the name env.sh and every guide export) first, then the
+# longer GATEWAY_API_INFERENCE_EXTENSION_VERSION for backward compatibility.
+GATEWAY_API_INFERENCE_EXTENSION_VERSION=${GAIE_VERSION:-${GATEWAY_API_INFERENCE_EXTENSION_VERSION:-"v1.5.0"}}
 ### GAIE CRDs
 log_success "🚪 GAIE CRDs: ${LOG_ACTION_NAME}..."
 kubectl $MODE -f https://github.com/kubernetes-sigs/gateway-api-inference-extension/releases/download/${GATEWAY_API_INFERENCE_EXTENSION_VERSION}/v1-manifests.yaml || true
